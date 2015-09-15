@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import QuartzCore
 
 @IBDesignable
 public class TagView: UIButton {
@@ -38,13 +39,16 @@ public class TagView: UIButton {
             titleEdgeInsets.bottom = paddingY
         }
     }
-    @IBInspectable var paddingX: CGFloat = 5 {
+    @IBInspectable var paddingXLeft: CGFloat = 5 {
         didSet {
-            titleEdgeInsets.left = paddingY
-            titleEdgeInsets.right = paddingY
+            titleEdgeInsets.left = paddingXLeft
         }
     }
-    
+    @IBInspectable var paddingXRight: CGFloat = 5 {
+        didSet {
+            titleEdgeInsets.right = paddingXRight
+        }
+    }
     @IBInspectable public var tagBackgroundColor: UIColor = UIColor.grayColor() {
         didSet {
             backgroundColor = tagBackgroundColor
@@ -56,7 +60,6 @@ public class TagView: UIButton {
             backgroundColor = selected ? tagSelectedBackgroundColor : tagBackgroundColor
         }
     }
-    
     
     var textFont: UIFont = UIFont.systemFontOfSize(12) {
         didSet {
@@ -76,6 +79,7 @@ public class TagView: UIButton {
     
     /// Handles Tap (TouchUpInside)
     public var onTap: ((TagView) -> Void)?
+    public var closeImage:String?
     
     // MARK: - init
     
@@ -89,7 +93,7 @@ public class TagView: UIButton {
         super.init(frame: CGRectZero)
         setTitle(title, forState: UIControlState.Normal)
         
-        setupView()
+//        setupView()
     }
     
     private func setupView() {
@@ -100,10 +104,30 @@ public class TagView: UIButton {
     
     override public func intrinsicContentSize() -> CGSize {
         var size = titleLabel?.text?.sizeWithAttributes([NSFontAttributeName: textFont]) ?? CGSizeZero
-        
+
         size.height = textFont.pointSize + paddingY * 2
-        size.width += paddingX * 2
-        
+        size.width += paddingXRight * 2
+
+        if let image = closeImage {
+            size.width += 30
+            self.addSubview(imageCloseSymbol(size, imageString: image))
+        }
+
         return size
+    }
+
+    func imageCloseSymbol(size: CGSize, imageString:String) -> UIView{
+        
+        let containerView = UIView(frame: CGRect(x: size.width-20, y: 0, width: 20, height: size.height))
+        
+        let imageCloseSymbol = UIImage(named: imageString)
+    
+        let imageViewClose = UIImageView(image: imageCloseSymbol)
+        imageViewClose.frame = CGRect(x: containerView.frame.width/2-8, y: containerView.frame.height/2-8, width: 16, height: 16)
+        
+        containerView.addSubview(imageViewClose)
+        
+        return containerView;
+        
     }
 }

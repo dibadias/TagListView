@@ -68,10 +68,18 @@ public class TagListView: UIView {
             rearrangeViews()
         }
     }
-    @IBInspectable public var paddingX: CGFloat = 5 {
+    @IBInspectable public var paddingXLeft: CGFloat = 5 {
         didSet {
             for tagView in tagViews {
-                tagView.paddingX = paddingX
+                tagView.paddingXRight = paddingXLeft
+            }
+            rearrangeViews()
+        }
+    }
+    @IBInspectable public var paddingXRight: CGFloat = 5 {
+        didSet {
+            for tagView in tagViews {
+                tagView.paddingXRight = paddingXRight
             }
             rearrangeViews()
         }
@@ -96,6 +104,7 @@ public class TagListView: UIView {
     }
     
     @IBOutlet public var delegate: TagListViewDelegate?
+    public var closeImage:String?
     
     var tagViews: [TagView] = []
     var tagViewHeight: CGFloat = 0
@@ -174,9 +183,10 @@ public class TagListView: UIView {
         tagView.borderWidth = borderWidth
         tagView.borderColor = borderColor
         tagView.paddingY = paddingY
-        tagView.paddingX = paddingX
+        tagView.paddingXLeft = paddingXLeft
+        tagView.paddingXRight = paddingXRight
         tagView.textFont = textFont
-        
+        tagView.closeImage = closeImage
         tagView.addTarget(self, action: "tagPressed:", forControlEvents: UIControlEvents.TouchUpInside)
         
         return addTagView(tagView)

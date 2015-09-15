@@ -18,6 +18,7 @@ class ViewController: UIViewController, TagListViewDelegate {
         super.viewDidLoad()
         
         tagListView.delegate = self
+        tagListView.closeImage = "ic_tag_close"
         tagListView.addTag("TagListView")
         tagListView.addTag("TEAChart")
         tagListView.addTag("To Be Removed")
@@ -35,6 +36,7 @@ class ViewController: UIViewController, TagListViewDelegate {
         }
         
         biggerTagListView.delegate = self
+        biggerTagListView.closeImage = "ic_tag_close"
         biggerTagListView.textFont = UIFont.systemFontOfSize(15)
         biggerTagListView.addTag("Inboard")
         biggerTagListView.addTag("Pomotodo")
