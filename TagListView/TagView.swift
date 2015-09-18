@@ -7,10 +7,9 @@
 //
 
 import UIKit
-import QuartzCore
 
 @IBDesignable
-public class TagView: UIButton {
+class TagView: UIButton {
     
     @IBInspectable var cornerRadius: CGFloat = 0 {
         didSet {
@@ -49,62 +48,31 @@ public class TagView: UIButton {
             titleEdgeInsets.right = paddingXRight
         }
     }
-    @IBInspectable public var tagBackgroundColor: UIColor = UIColor.grayColor() {
-        didSet {
-            backgroundColor = tagBackgroundColor
-        }
-    }
-    
-    @IBInspectable public var tagSelectedBackgroundColor: UIColor = UIColor.redColor() {
-        didSet {
-            backgroundColor = selected ? tagSelectedBackgroundColor : tagBackgroundColor
-        }
-    }
-    
     var textFont: UIFont = UIFont.systemFontOfSize(12) {
         didSet {
             titleLabel?.font = textFont
         }
     }
-    
-    override public var selected: Bool {
-        didSet {
-            if selected {
-                backgroundColor = tagSelectedBackgroundColor
-            } else {
-                backgroundColor = tagBackgroundColor
-            }
-        }
-    }
-    
-    /// Handles Tap (TouchUpInside)
-    public var onTap: ((TagView) -> Void)?
-    public var closeImage:String?
+
+    var closeImage:String?
     
     // MARK: - init
     
-    required public init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
-        setupView()
     }
     
     init(title: String) {
         super.init(frame: CGRectZero)
         setTitle(title, forState: UIControlState.Normal)
-        
-//        setupView()
-    }
-    
-    private func setupView() {
         frame.size = intrinsicContentSize()
     }
     
     // MARK: - layout
     
-    override public func intrinsicContentSize() -> CGSize {
+    override func intrinsicContentSize() -> CGSize {
         var size = titleLabel?.text?.sizeWithAttributes([NSFontAttributeName: textFont]) ?? CGSizeZero
-
+        
         size.height = textFont.pointSize + paddingY * 2
         size.width += paddingXRight * 2
 
@@ -126,6 +94,7 @@ public class TagView: UIButton {
         imageViewClose.frame = CGRect(x: containerView.frame.width/2-8, y: containerView.frame.height/2-8, width: 16, height: 16)
         
         containerView.addSubview(imageViewClose)
+        containerView.userInteractionEnabled = false
         
         return containerView;
         

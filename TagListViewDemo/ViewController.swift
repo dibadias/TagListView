@@ -25,15 +25,6 @@ class ViewController: UIViewController, TagListViewDelegate {
         tagListView.addTag("To Be Removed")
         tagListView.addTag("Quark Shell")
         tagListView.removeTag("To Be Removed")
-        tagListView.addTag("On tap will be removed").onTap = { tagView in
-            self.tagListView.removeTagView(tagView)
-        }
-        
-        let tagView = tagListView.addTag("gray")
-        tagView.tagBackgroundColor = UIColor.grayColor()
-        tagView.onTap = { tagView in
-            println("Don’t tap me!")
-        }
         
         biggerTagListView.delegate = self
         biggerTagListView.closeImage = "ic_tag_close"
@@ -58,10 +49,8 @@ class ViewController: UIViewController, TagListViewDelegate {
         // Dispose of any resources that can be recreated.
     }
 
-    func tagPressed(title: String, tagView: TagView, sender: TagListView) {
-        println("Tag pressed: \(title), \(sender)")
-        
-        tagView.selected = !tagView.selected
+    func tagPressed(title: String, sender: TagListView) {
+        print("Tag pressed: \(title), \(sender)")
     }
 }
 
